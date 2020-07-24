@@ -1,4 +1,4 @@
-package wglinkmonitor
+package wglinkrecover
 
 import (
 	"log"
@@ -7,7 +7,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/jeremiejig/wireguard-monitorlink/internal/link"
+	"github.com/jeremiejig/wg-linkrecover/internal/link"
 	"golang.zx2c4.com/wireguard/wgctrl"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 )

@@ -1,4 +1,4 @@
-module github.com/jeremiejig/wireguard-monitorlink
+module github.com/jeremiejig/wg-linkrecover
 
 go 1.14
 

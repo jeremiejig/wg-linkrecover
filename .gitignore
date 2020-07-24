@@ -1,4 +1,5 @@
-wg-monitorlink
+/wg-linkrecover
+/cmd/wg-linkrecover/wg-linkrecover
 
 ### Created by https://www.gitignore.io
 ### Emacs ###

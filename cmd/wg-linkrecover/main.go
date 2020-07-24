@@ -6,7 +6,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/jeremiejig/wireguard-monitorlink/internal/wglinkmonitor"
+	"github.com/jeremiejig/wg-linkrecover/internal/wglinkrecover"
 )
 
 func main() {
@@ -18,13 +18,13 @@ func main() {
 	}
 
 	sigchan := make(chan os.Signal, 1)
-	app := wglinkmonitor.NewApp(*ifName)
+	app := wglinkrecover.NewApp(*ifName)
 	signal.Notify(sigchan, os.Interrupt, syscall.SIGTERM)
 	go handleSigStop(app, sigchan)
 	app.Start()
 }
 
-func handleSigStop(app *wglinkmonitor.App, sig <-chan os.Signal) {
+func handleSigStop(app *wglinkrecover.App, sig <-chan os.Signal) {
 	_ = <-sig
 	app.Stop()
 }
