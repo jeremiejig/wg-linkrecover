@@ -13,7 +13,7 @@ Wireguard-monitor requires *root* or `cap_net_admin` to work.
 
 To install the program you can follow this step:
 
-* `go get github.com/jeremiejig/wg-linkrecover`
+* `go get github.com/jeremiejig/wg-linkrecover/cmd/wg-linkrecover`
 * optionnaly do `setcap cap_net_admin=ep wg-linkrecover`
 
 ## Launch
