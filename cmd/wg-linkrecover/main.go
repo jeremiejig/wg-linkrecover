@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	ifName := flag.String("iname", "", "Interface name to monitor.")
+	ifName := flag.String("ifname", "", "Interface name to monitor.")
 
 	flag.Parse()
 	if *ifName == "" {
