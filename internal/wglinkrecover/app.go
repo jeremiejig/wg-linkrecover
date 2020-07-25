@@ -90,7 +90,7 @@ func (app *App) main() {
 		case <-app.linkState.C:
 			linkNotFound := atomic.LoadUint64(&app.linkState.LinkNotFoundTick)
 			linkDowned := atomic.LoadUint64(&app.linkState.LinkDownedTick)
-			if linkNotFound == 0 && linkDowned > 5 {
+			if linkNotFound == 0 && linkDowned > 20 {
 				log.Printf("%q link down !", app.interfaceName)
 				if !portChanged {
 					dev, err := app.wgClient.Device(app.interfaceName)
