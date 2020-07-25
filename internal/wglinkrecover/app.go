@@ -101,7 +101,9 @@ func (app *App) main() {
 					conf := wgtypes.Config{
 						ListenPort: new(int),
 					}
-					*conf.ListenPort = dev.ListenPort + incremenPort
+					// Limit port between 32768 to 65535
+					// This will skip some port.
+					*conf.ListenPort = ((dev.ListenPort + incremenPort) % 65536) | 1<<15
 
 					err = app.wgClient.ConfigureDevice(app.interfaceName, conf)
 					if err == nil {
