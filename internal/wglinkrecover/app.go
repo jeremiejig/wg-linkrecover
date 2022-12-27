@@ -92,6 +92,10 @@ func (app *App) main() {
 			linkDowned := atomic.LoadUint64(&app.linkState.LinkDownedTick)
 			if linkNotFound == 0 && linkDowned > 20 {
 				log.Printf("%q link down !", app.interfaceName)
+				// If link still down retry to change port.
+				if portChanged && (linkDowned%80) == 0 {
+					portChanged = false
+				}
 				if !portChanged {
 					dev, err := app.wgClient.Device(app.interfaceName)
 					if err != nil {
