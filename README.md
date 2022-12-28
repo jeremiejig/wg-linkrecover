@@ -25,15 +25,52 @@ To start monitoring a wireguard link start the command as follow:
 Or create a systemd service:
 
 ```systemd
+# /etc/systemd/system/wg-linkrecover@.service
 [Unit]
-Description=Wireguard link recover for wg0
-After=wg-quick@wg0.service
-Wants=wg-quick@wg0.service
-PartOf=wg-quick@wg0.service
+Description=Wireguard link recover for %I
+After=wg-quick@%i.service
+Wants=wg-quick@%i.service
+PartOf=wg-quick@%i.service
+# Or
+After=sys-devices-virtual-net-%i.device
+Wants=sys-devices-virtual-net-%i.device
+PartOf=sys-devices-virtual-net-%i.device
 
 [Service]
-ExecStart=/usr/local/bin/wg-linkrecover
+RootDirectory=/usr/local
+ExecStart=/bin/wg-linkrecover -ifname %I
+DynamicUser=yes
+ProtectProc=invisible
+ProcSubset=pid
+UMask=0077
+
 AmbientCapabilities=cap_net_admin
+CapabilityBoundingSet=cap_net_admin
+SecureBits=no-setuid-fixup-locked
+
+RestrictNamespaces=yes
+ProtectHome=yes
+ProtectHostname=yes
+ProtectKernelTunables=yes
+ProtectClock=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+MemoryDenyWriteExecute=yes
+RestrictRealtime=yes
+
+PrivateDevices=yes
+PrivateNetwork=no
+IPAddressDeny=any
+RestrictAddressFamilies=AF_NETLINK
+PrivateIPC=yes
+LockPersonality=yes
+# Go specific
+SystemCallFilter=@default @signal @io-event @basic-io clone openat pipe2 fcntl
+# app specific
+SystemCallFilter=@network-io
+SystemCallErrorNumber=EPERM
+SystemCallArchitectures=native
 
 [Install]
 WantedBy=multi-user.target
