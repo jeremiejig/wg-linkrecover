@@ -1,6 +1,7 @@
 package link
 
 import (
+	"log"
 	"sync/atomic"
 	"time"
 
@@ -81,6 +82,7 @@ func (m *Monitor) main() {
 func (m *Monitor) updateStat() {
 	links, err := m.conn.Link.List()
 	if err != nil {
+		log.Print(err)
 		return
 	}
 	for _, l := range links {
