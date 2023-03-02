@@ -58,7 +58,9 @@ func (m *Monitor) main() {
 		case <-m.ticker.C:
 			m.updateStat()
 			if atomic.LoadUint64(&m.LinkNotFoundTick) == 0 {
-				if m.currentStats.RXPackets != m.prevStats.RXPackets {
+				if m.currentStats.TXDropped != m.prevStats.TXDropped {
+					atomic.AddUint64(&m.LinkDownedTick, 1)
+				} else if m.currentStats.RXPackets != m.prevStats.RXPackets {
 					// We received packet link is not down.
 					atomic.StoreUint64(&m.LinkDownedTick, 0)
 					// m.lastActivityStats = m.currentStats
